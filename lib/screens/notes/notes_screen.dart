@@ -23,7 +23,7 @@ class NotesScreen extends StatelessWidget {
         title: AppText(
           size: 20,
           text: 'Notes',
-          weight: FontWeight.bold,
+          fweight: FontWeight.bold,
         ),
         actions: [
           IconButton(

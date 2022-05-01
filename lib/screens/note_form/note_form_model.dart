@@ -1,26 +1,27 @@
 import 'package:flutter/cupertino.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/domain/data_providers/box_manager.dart';
 import 'package:todo_app/domain/models/models.dart';
 
 class NoteFormModel extends ChangeNotifier {
-  late final Box<Note> box;
+  late final Future<Box<Note>> _box;
 
-  var newNoteText = '';
+  String newNoteText = '';
   var selectedColor = 'other';
 
   NoteFormModel() {
-    setup();
+    _box = BoxManager.instance.openNoteBox();
   }
 
-  Future<void> setup() async {
-    await _openBox();
-  }
-
-  Future<void> _openBox() async {
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(NoteAdapter());
-    }
-    box = await Hive.openBox('notes_box');
+  Future<void> createNote(BuildContext context) async {
+    final note = Note(
+      date: DateTime.now(),
+      theme: selectedColor,
+      title: newNoteText,
+    );
+    (await _box).add(note);
+    notifyListeners();
+    Navigator.pop(context);
   }
 
   void onChangedTextInNewNote(String value) {
@@ -32,14 +33,9 @@ class NoteFormModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void createNote(BuildContext context) {
-    final note = Note(
-      date: DateTime.now(),
-      theme: selectedColor,
-      title: newNoteText,
-    );
-    box.add(note);
-    notifyListeners();
-    Navigator.pop(context);
+  @override
+  void dispose() async {
+    await BoxManager.instance.closeBox(await _box);
+    super.dispose();
   }
 }

@@ -22,7 +22,7 @@ class TimelineScreen extends StatelessWidget {
         title: AppText(
           size: 20,
           text: 'Timeline',
-          weight: FontWeight.bold,
+          fweight: FontWeight.bold,
         ),
         actions: [
           IconButton(
@@ -42,6 +42,7 @@ class TimelineScreen extends StatelessWidget {
               itemCount: sortTasks.length,
               itemBuilder: (context, index) {
                 final tasks = sortTasks[index];
+                final date = DateFormat.MMMMd().format(tasks[index].date);
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Column(
@@ -49,8 +50,10 @@ class TimelineScreen extends StatelessWidget {
                     children: [
                       AppText(
                         size: 18,
-                        text: DateFormat.MMMMd().format(tasks[index].date),
-                        weight: FontWeight.bold,
+                        text: DateFormat.MMMMd().format(DateTime.now()) == date
+                            ? 'Today'
+                            : date,
+                        fweight: FontWeight.bold,
                       ),
                       Column(
                         children: tasks

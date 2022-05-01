@@ -7,33 +7,12 @@ class BoxManager {
 
   final Map<String, int> _boxCounter = <String, int>{};
 
-  Box<Task> openTaskBox() {
+  Future<Box<Task>> openTaskBox() async {
     return _openBox('tasks_box', 2, TaskAdapter());
   }
 
-  Box<Note> openNoteBox() {
+  Future<Box<Note>> openNoteBox() async {
     return _openBox('notes_box', 0, NoteAdapter());
-  }
-
-  Box<T> _openBox<T>(
-    String name,
-    int typeId,
-    TypeAdapter<T> adapter,
-  ) {
-    if (Hive.isBoxOpen(name)) {
-      final count = _boxCounter[name] ?? 1;
-      _boxCounter[name] = count + 1;
-      return Hive.openBox(name) as Box<T>;
-      
-    }
-
-    _boxCounter[name] = 1;
-
-    if (!Hive.isAdapterRegistered(typeId)) {
-      Hive.registerAdapter(adapter);
-    }
-
-    return Hive.openBox(name) as Box<T>;
   }
 
   Future<void> closeBox<T>(Box<T> box) async {
@@ -49,5 +28,26 @@ class BoxManager {
     _boxCounter.remove(box.name);
     await box.compact();
     await box.close();
+  }
+
+  String makeTaskBoxName(int groupKey) => 'tasks_box_$groupKey';
+
+  Future<Box<T>> _openBox<T>(
+    String name,
+    int typeId,
+    TypeAdapter<T> adapter,
+  ) async {
+    // Уже открыт
+    if (Hive.isBoxOpen(name)) {
+      final count = _boxCounter[name] ?? 1;
+      _boxCounter[name] = count + 1;
+      return Hive.openBox<T>(name);
+    }
+    // Открытие
+    _boxCounter[name] = 1;
+    if (!Hive.isAdapterRegistered(typeId)) {
+      Hive.registerAdapter(adapter);
+    }
+    return Hive.openBox<T>(name);
   }
 }

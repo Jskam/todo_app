@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 
 Widget AppText({
-  FontWeight weight = FontWeight.normal,
+  FontWeight fweight = FontWeight.normal,
   Color color = Colors.black,
   required double size,
   required String text,
@@ -23,7 +23,7 @@ Widget AppText({
         fontFamily: 'Merriweather',
         color: color,
         fontSize: size,
-        fontWeight: weight,
+        fontWeight: fweight,
         decoration: lineThrough ? TextDecoration.lineThrough : null,
         ),
   );

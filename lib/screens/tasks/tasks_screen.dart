@@ -72,14 +72,14 @@ class TasksScreen extends StatelessWidget {
                               AppText(
                                 size: 16,
                                 text: task.title,
-                                weight: FontWeight.bold,
+                                fweight: FontWeight.bold,
                                 overflow: true,
                               ),
                               AppText(
                                   size: 16,
                                   text: task.description,
                                   color: Colors.black.withOpacity(.8),
-                                  weight: FontWeight.w300,
+                                  fweight: FontWeight.w300,
                                   overflow: true),
                             ],
                           ),

@@ -23,7 +23,7 @@ class NoteFormScreen extends StatelessWidget {
         title: AppText(
           size: 20,
           text: 'Create New Note',
-          weight: FontWeight.bold,
+          fweight: FontWeight.bold,
         ),
         iconTheme: const IconThemeData(color: Colors.black),
       ),

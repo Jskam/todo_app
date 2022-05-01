@@ -2,11 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/MATERIAL.dart';
 import 'package:hive/hive.dart';
+import 'package:todo_app/domain/data_providers/box_manager.dart';
 import 'package:todo_app/domain/models/models.dart';
 import 'package:todo_app/navigation.dart';
 
 class TasksModel extends ChangeNotifier {
-  late final Box<Task> box;
+  late final Future<Box<Task>> _box;
+
   var _tasks = <Task>[];
   List<Task> get tasks => _tasks;
 
@@ -15,29 +17,29 @@ class TasksModel extends ChangeNotifier {
   }
 
   Future<void> setup() async {
-    await _openBox();
+    _box = BoxManager.instance.openTaskBox();
     updateState();
   }
 
-  Future<void> _openBox() async {
-    if (!Hive.isAdapterRegistered(2)) {
-      Hive.registerAdapter(TaskAdapter());
-    }
-    box = await Hive.openBox('tasks_box');
-  }
-
   Future<void> deleteTask(int index) async {
-    box.delete(index);
+    (await _box).delete(index);
     updateState();
   }
 
   void navToCreateNewTask(context) {
-    Navigator.pushNamed(context, MainNavigationRouteNames.taskForm)
-        .then((value) => updateState());
+    Navigator.pushNamed(context, MainNavigationRouteNames.taskForm).then(
+      (value) => updateState(),
+    );
   }
 
-  void updateState() {
-    _tasks = box.values.toList();
+  Future<void> updateState() async {
+    _tasks = (await _box).values.toList();
     notifyListeners();
+  }
+
+  @override
+  void dispose() async {
+    await BoxManager.instance.closeBox(await _box);
+    super.dispose();
   }
 }

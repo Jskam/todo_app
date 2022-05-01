@@ -2,32 +2,28 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
+import 'package:todo_app/domain/data_providers/box_manager.dart';
 import 'package:todo_app/domain/models/models.dart';
 import 'package:todo_app/navigation.dart';
 
 class NotesModel extends ChangeNotifier {
-  late final Box<Note> box;
+  late final Future<Box<Note>> _box;
   var _notes = <Note>[];
   List<Note> get notes => _notes;
 
   NotesModel() {
-    setup();
-  }
-
-  Future<void> setup() async {
-    await _openBox();
+    _box = BoxManager.instance.openNoteBox();
     updateState();
   }
 
-  Future<void> _openBox() async {
-    if (!Hive.isAdapterRegistered(0)) {
-      Hive.registerAdapter(NoteAdapter());
-    }
-    box = await Hive.openBox('notes_box');
+  Future<void> updateState() async {
+    _notes = (await _box).values.toList();
+    _notes.sort(((a, b) => b.date.compareTo(a.date)));
+    notifyListeners();
   }
 
   Future<void> deleteNote(int index) async {
-    box.delete(index);
+    (await _box).delete(index);
     updateState();
   }
 
@@ -38,9 +34,9 @@ class NotesModel extends ChangeNotifier {
     ).then((value) => updateState());
   }
 
-  void updateState() {
-    _notes = box.values.toList();
-    _notes.sort(((a, b) => b.date.compareTo(a.date)));
-    notifyListeners();
+  @override
+  void dispose() async {
+    await BoxManager.instance.closeBox(await _box);
+    super.dispose();
   }
 }

@@ -1,34 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:todo_app/domain/data_providers/box_manager.dart';
 import 'package:todo_app/domain/models/models.dart';
 
 class TimelineModel extends ChangeNotifier {
+  late final Future<Box<Task>> _box;
   var _tasks = <Task>[];
+
   var _sortTasks = <List<Task>>[[]];
   List<List<Task>> get sortTasks => _sortTasks;
-  late final Box<Task> box;
 
   TimelineModel() {
-    setup();
-  }
-
-  Future<void> setup() async {
-    await _openBox();
+    _box = BoxManager.instance.openTaskBox();
     updateState();
   }
 
-  Future<void> _openBox() async {
-    if (!Hive.isAdapterRegistered(2)) {
-      Hive.registerAdapter(TaskAdapter());
-    }
-    box = await Hive.openBox('tasks_box');
-  }
-
-  void _sortBox() {
-    _tasks = box.values.toList();
+  Future<void> _sortBox() async {
+    _tasks = (await _box).values.toList();
     _tasks.sort((a, b) => b.date.compareTo(a.date));
     var count = 0;
-    if (box.values.isNotEmpty) {
+    if ((await _box).values.isNotEmpty) {
       var date = _tasks[0].date.day + _tasks[0].date.month;
       for (var task in _tasks) {
         if (date == task.date.day + task.date.month) {
@@ -43,15 +34,15 @@ class TimelineModel extends ChangeNotifier {
     }
   }
 
-  void updateState() {
+  Future<void> updateState() async {
     _sortTasks = [[]];
-    _sortBox();
+    await _sortBox();
     notifyListeners();
   }
 
   @override
-  void dispose() {
+  Future<void> dispose() async {
+    await BoxManager.instance.closeBox(await _box);
     super.dispose();
-    box.close();
   }
 }

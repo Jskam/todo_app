@@ -21,25 +21,28 @@ class Sidebar extends StatelessWidget {
             icon: Icons.edit_note,
             title: 'Notes',
             color: Colors.green,
-            function: () => Navigator.pushNamed(context, MainNavigationRouteNames.notes),
+            function: () => Navigator.pop(context),
           ),
           _ListTileWidget(
             icon: Icons.timeline,
             title: 'Timeline',
             color: Colors.orange,
-           function: () => Navigator.pushNamed(context, MainNavigationRouteNames.timeline),
+            function: () =>
+                Navigator.pushNamed(context, MainNavigationRouteNames.timeline),
           ),
           _ListTileWidget(
             icon: Icons.checklist,
             title: 'Task Management',
             color: Colors.blue,
-            function: () => Navigator.pushNamed(context, MainNavigationRouteNames.tasks),
+            function: () =>
+                Navigator.pushNamed(context, MainNavigationRouteNames.tasks),
           ),
           _ListTileWidget(
             icon: Icons.alarm,
             title: 'Pomodoro',
             color: Colors.red,
-            function: () => Navigator.pushNamed(context, MainNavigationRouteNames.pomodoro),
+            function: () =>
+                Navigator.pushNamed(context, MainNavigationRouteNames.pomodoro),
           ),
           _ListTileWidget(
             icon: Icons.settings_outlined,

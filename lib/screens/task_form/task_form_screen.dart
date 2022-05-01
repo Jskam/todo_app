@@ -23,7 +23,7 @@ class TaskFormScreen extends StatelessWidget {
         title: AppText(
           size: 20,
           text: 'Create New Task',
-          weight: FontWeight.bold,
+          fweight: FontWeight.bold,
         ),
         iconTheme: const IconThemeData(color: Colors.black),
       ),

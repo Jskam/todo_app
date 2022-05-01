@@ -39,12 +39,12 @@ class PomodoroScreen extends StatelessWidget {
                 title: AppText(
                   size: 18,
                   text: 'Кратко о Помодоро',
-                  weight: FontWeight.bold,
+                  fweight: FontWeight.bold,
                 ),
                 subtitle: AppText(
                   size: 16,
                   text: subtitle,
-                  weight: FontWeight.w300,
+                  fweight: FontWeight.w300,
                   maxLines: 2,
                   overflow: true,
                 ),
@@ -65,7 +65,7 @@ class PomodoroScreen extends StatelessWidget {
                 size: 34,
                 text: '25:00',
                 color: Colors.white,
-                weight: FontWeight.bold,
+                fweight: FontWeight.bold,
               ),
             ),
           ),
@@ -158,7 +158,7 @@ _showSimpleModalDialog(context, String subtitle) {
           title: AppText(
             size: 20,
             text: 'Кратко о Технике Помодоро',
-            weight: FontWeight.bold,
+            fweight: FontWeight.bold,
           ),
           elevation: 0.0,
         ),
