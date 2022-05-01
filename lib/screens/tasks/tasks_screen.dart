@@ -77,8 +77,12 @@ class TasksScreen extends StatelessWidget {
                               ),
                               AppText(
                                   size: 16,
-                                  text: task.description,
-                                  color: Colors.black.withOpacity(.8),
+                                  text: task.description.isNotEmpty
+                                      ? task.description
+                                      : '<without description>',
+                                  color: task.description.isNotEmpty
+                                      ? Colors.black.withOpacity(.8)
+                                      : Colors.black.withOpacity(.4),
                                   fweight: FontWeight.w300,
                                   overflow: true),
                             ],

@@ -110,7 +110,7 @@ class _TimerWidget extends StatelessWidget {
             ),
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: AppText(
-              size: 34,
+              size: 28,
               text: 'Work',
               color: Colors.black,
             ),
@@ -196,10 +196,6 @@ class _PomodoroInfoTile extends StatelessWidget {
           fweight: FontWeight.w300,
           maxLines: 2,
           overflow: true,
-        ),
-        trailing: IconButton(
-          icon: const Icon(Icons.touch_app),
-          onPressed: () {},
         ),
       ),
     );
