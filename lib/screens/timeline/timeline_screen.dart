@@ -48,12 +48,16 @@ class TimelineScreen extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      AppText(
-                        size: 18,
-                        text: DateFormat.MMMMd().format(DateTime.now()) == date
-                            ? 'Today'
-                            : date,
-                        fweight: FontWeight.bold,
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5),
+                        child: AppText(
+                          size: 18,
+                          text:
+                              DateFormat.MMMMd().format(DateTime.now()) == date
+                                  ? 'Today'
+                                  : date,
+                          fweight: FontWeight.bold,
+                        ),
                       ),
                       Column(
                         children: tasks

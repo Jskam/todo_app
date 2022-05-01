@@ -27,10 +27,12 @@ class MainNavigation {
     MainNavigationRouteNames.pomodoro: (context) =>
         _screenFactory.makePomodoroScreen(),
   };
-
-  
 }
+
 void resetNav(context) {
-    Navigator.pushNamedAndRemoveUntil(
-        context, MainNavigationRouteNames.notes, (route) => false);
-  }
+  Navigator.pushNamedAndRemoveUntil(
+    context,
+    MainNavigationRouteNames.notes,
+    (route) => false,
+  );
+}

@@ -4,6 +4,7 @@ import 'package:todo_app/screens/note_form/note_form_model.dart';
 import 'package:todo_app/screens/note_form/note_form_screen.dart';
 import 'package:todo_app/screens/notes/notes_model.dart';
 import 'package:todo_app/screens/notes/notes_screen.dart';
+import 'package:todo_app/screens/pomodoro/pomodoro_model.dart';
 import 'package:todo_app/screens/pomodoro/pomodoro_screen.dart';
 import 'package:todo_app/screens/task_form/task_form_model.dart';
 import 'package:todo_app/screens/task_form/task_form_screen.dart';
@@ -23,7 +24,7 @@ class ScreenFactory {
   Widget makeNoteFormScreen() {
     return ChangeNotifierProvider(
       create: (_) => NoteFormModel(),
-      child:  const NoteFormScreen(),
+      child: const NoteFormScreen(),
     );
   }
 
@@ -42,7 +43,11 @@ class ScreenFactory {
   }
 
   Widget makePomodoroScreen() {
-    return const PomodoroScreen();
+    return ChangeNotifierProvider(
+      child: const PomodoroScreen(),
+      create: (_) => PomodoroModel(),
+      lazy: false,
+    );
   }
 
   Widget makeTimelineScreen() {
