@@ -43,62 +43,82 @@ class TimelineScreen extends StatelessWidget {
               itemBuilder: (context, index) {
                 final tasks = sortTasks[index];
                 final date = DateFormat.MMMMd().format(tasks[index].date);
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 5),
-                        child: AppText(
-                          size: 18,
-                          text:
-                              DateFormat.MMMMd().format(DateTime.now()) == date
-                                  ? 'Today'
-                                  : date,
-                          fweight: FontWeight.bold,
-                        ),
+                return Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 5,
+                        horizontal: 20,
                       ),
-                      Column(
-                        children: tasks
-                            .map(
-                              (task) => GestureDetector(
-                                onTap: () => _showModalWindow(context, task),
-                                child: Card(
-                                  child: ListTile(
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30),
-                                    ),
-                                    title: AppText(
-                                      size: 18,
-                                      text: task.title,
-                                      maxLines: 1,
-                                      overflow: true,
-                                      lineThrough: task.isDone ? true : false,
-                                    ),
-                                    trailing: IconButton(
-                                      icon: task.isDone
-                                          ? const Icon(
-                                              Icons.check_circle_outline_sharp,
-                                              color: Colors.green,
-                                            )
-                                          : const Icon(
-                                              Icons.circle_outlined,
-                                            ),
-                                      onPressed: () {
-                                        task.isDone = !task.isDone;
-                                        task.save();
-                                        model.updateState();
-                                      },
+                      child: AppText(
+                        size: 20,
+                        text: DateFormat.MMMMd().format(DateTime.now()) == date
+                            ? 'Today'
+                            : date,
+                        fweight: FontWeight.bold,
+                      ),
+                    ),
+                    Column(
+                      children: tasks
+                          .map(
+                            (task) => Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 20),
+                              child: Row(
+                                children: [
+                                  AppText(
+                                    size: 18,
+                                    text: DateFormat.Hm().format(task.date),
+                                    fweight: FontWeight.w300,
+                                  ),
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Card(
+                                      elevation: 2,
+                                      child: GestureDetector(
+                                        onTap: () =>
+                                            _showModalWindow(context, task),
+                                        child: ListTile(
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30),
+                                          ),
+                                          title: AppText(
+                                            size: 18,
+                                            text: task.title,
+                                            maxLines: 1,
+                                            overflow: true,
+                                            lineThrough:
+                                                task.isDone ? true : false,
+                                          ),
+                                          trailing: IconButton(
+                                            icon: task.isDone
+                                                ? const Icon(
+                                                    Icons
+                                                        .check_circle_outline_sharp,
+                                                    color: Colors.green,
+                                                  )
+                                                : const Icon(
+                                                    Icons.circle_outlined,
+                                                  ),
+                                            onPressed: () {
+                                              task.isDone = !task.isDone;
+                                              task.save();
+                                              model.updateState();
+                                            },
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
+                                ],
                               ),
-                            )
-                            .toList(),
-                      ),
-                    ],
-                  ),
+                            ),
+                          )
+                          .toList(),
+                    ),
+                  ],
                 );
               },
             )

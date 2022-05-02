@@ -1,4 +1,3 @@
-import 'dart:developer';
 
 import 'package:circular_countdown_timer/circular_countdown_timer.dart';
 import 'package:flutter/cupertino.dart';

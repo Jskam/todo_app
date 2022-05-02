@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -62,6 +61,10 @@ class TasksScreen extends StatelessWidget {
                               topRight: Radius.circular(15),
                               bottomRight: Radius.circular(15),
                             ),
+                          ),
+                          child: Icon(
+                            task.isDone ? Icons.done : null,
+                            color: Colors.white,
                           ),
                         ),
                         const SizedBox(width: 15),

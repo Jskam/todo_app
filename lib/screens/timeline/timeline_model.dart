@@ -12,23 +12,26 @@ class TimelineModel extends ChangeNotifier {
 
   TimelineModel() {
     _box = BoxManager.instance.openTaskBox();
+
     updateState();
   }
 
   Future<void> _sortBox() async {
-    _tasks = (await _box).values.toList();
-    _tasks.sort((a, b) => b.date.compareTo(a.date));
-    var count = 0;
-    if ((await _box).values.isNotEmpty) {
-      var date = _tasks[0].date.day + _tasks[0].date.month;
-      for (var task in _tasks) {
-        if (date == task.date.day + task.date.month) {
-          _sortTasks[count].add(task);
-        } else {
-          date = task.date.day + task.date.month;
-          _sortTasks.add([]);
-          count++;
-          _sortTasks[count].add(task);
+    if ((await _box).isNotEmpty) {
+      _tasks = (await _box).values.toList();
+      _tasks.sort((a, b) => b.date.compareTo(a.date));
+      var count = 0;
+      if ((await _box).values.isNotEmpty) {
+        var date = _tasks[0].date.day + _tasks[0].date.month;
+        for (var task in _tasks) {
+          if (date == task.date.day + task.date.month) {
+            _sortTasks[count].add(task);
+          } else {
+            date = task.date.day + task.date.month;
+            _sortTasks.add([]);
+            count++;
+            _sortTasks[count].add(task);
+          }
         }
       }
     }
