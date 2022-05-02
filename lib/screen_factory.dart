@@ -6,6 +6,7 @@ import 'package:todo_app/screens/notes/notes_model.dart';
 import 'package:todo_app/screens/notes/notes_screen.dart';
 import 'package:todo_app/screens/pomodoro/pomodoro_model.dart';
 import 'package:todo_app/screens/pomodoro/pomodoro_screen.dart';
+import 'package:todo_app/screens/settings/settings_screen.dart';
 import 'package:todo_app/screens/task_form/task_form_model.dart';
 import 'package:todo_app/screens/task_form/task_form_screen.dart';
 import 'package:todo_app/screens/tasks/tasks_model.dart';
@@ -55,5 +56,9 @@ class ScreenFactory {
       create: (_) => TimelineModel(),
       child: const TimelineScreen(),
     );
+  }
+
+  Widget makeSettingScreen() {
+    return const SettingsScreen();
   }
 }

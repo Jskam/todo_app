@@ -8,6 +8,7 @@ abstract class MainNavigationRouteNames {
   static const taskForm = '/tasks/task_form';
   static const timeline = '/timeline';
   static const pomodoro = '/pomodoro';
+  static const settings = '/settings';
 }
 
 class MainNavigation {
@@ -26,6 +27,8 @@ class MainNavigation {
         _screenFactory.makeTimelineScreen(),
     MainNavigationRouteNames.pomodoro: (context) =>
         _screenFactory.makePomodoroScreen(),
+    MainNavigationRouteNames.settings: (context) =>
+        _screenFactory.makeSettingScreen(),
   };
 }
 

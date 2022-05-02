@@ -48,7 +48,8 @@ class Sidebar extends StatelessWidget {
             icon: Icons.settings_outlined,
             title: 'Settings',
             color: Colors.blueGrey,
-            function: () {},
+            function: () =>
+                Navigator.pushNamed(context, MainNavigationRouteNames.settings),
           ),
           _ListTileWidget(
             icon: Icons.star_border,
