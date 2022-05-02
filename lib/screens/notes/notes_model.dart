@@ -11,15 +11,46 @@ class NotesModel extends ChangeNotifier {
   var _notes = <Note>[];
   List<Note> get notes => _notes;
 
+  String filter = 'all';
+
   NotesModel() {
     _box = BoxManager.instance.openNoteBox();
     updateState();
   }
 
   Future<void> updateState() async {
-    _notes = (await _box).values.toList();
+    _notes.clear();
+
+    if (filter != 'all') {
+      (await _box).toMap().forEach((key, value) {
+        if(value.theme == filter){
+        _notes.add(value);
+
+        }
+      });
+    } else {
+      _notes = (await _box).values.toList();
+    }
     _notes.sort(((a, b) => b.date.compareTo(a.date)));
     notifyListeners();
+  }
+
+  void onFilterButtonPress() {
+    switch (filter) {
+      case 'all':
+        filter = 'work';
+        break;
+      case 'work':
+        filter = 'study';
+        break;
+      case 'study':
+        filter = 'other';
+        break;
+      case 'other':
+        filter = 'all';
+        break;
+    }
+    updateState();
   }
 
   Future<void> deleteNote(int index) async {

@@ -26,10 +26,26 @@ class NotesScreen extends StatelessWidget {
           fweight: FontWeight.bold,
         ),
         actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.filter_alt_outlined),
+          InkWell(
+            onTap: model.onFilterButtonPress,
+            child: CircleAvatar(
+              radius: 17,
+              child: Icon(
+                model.filter == 'all'
+                    ? Icons.filter_alt_off_outlined
+                    : Icons.filter_alt_outlined,
+                color: Colors.white,
+              ),
+              backgroundColor: model.filter == 'work'
+                  ? Colors.blue
+                  : model.filter == 'study'
+                      ? Colors.green
+                      : model.filter == 'other'
+                          ? Colors.orange[700]
+                          : Colors.blueGrey,
+            ),
           ),
+          const SizedBox(width: 10),
         ],
       ),
       body: notes.isNotEmpty
